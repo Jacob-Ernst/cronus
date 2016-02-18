@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::Base
+class HomeController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   before_action :set_current_user, :authenticate_request
@@ -14,6 +14,9 @@ class ApplicationController < ActionController::Base
     render json: { error: 'Auth token is expired' }, status: 419 # unofficial timeout status code
   end
 
+  def needs_auth
+    render json: {}
+  end
 
 
   private

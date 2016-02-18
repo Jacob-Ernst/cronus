@@ -24,3 +24,5 @@ module Cronus
     config.active_record.raise_in_transactional_callbacks = true
   end
 end
+
+Rails.application.routes.default_url_options[:host] = ENV['ROOT_URL']

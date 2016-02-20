@@ -11,7 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160131221656) do
+ActiveRecord::Schema.define(version: 20160220160429) do
+
+  create_table "goals", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "frequency"
+    t.datetime "deadline"
+    t.integer  "category"
+    t.decimal  "target"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "goals", ["user_id"], name: "index_goals_on_user_id"
+
+  create_table "goals_tags", id: false, force: :cascade do |t|
+    t.integer "goal_id", null: false
+    t.integer "tag_id",  null: false
+  end
+
+  create_table "progress_points", force: :cascade do |t|
+    t.decimal  "amount",     null: false
+    t.integer  "goal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "progress_points", ["goal_id"], name: "index_progress_points_on_goal_id"
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"

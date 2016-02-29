@@ -1,8 +1,6 @@
-class AuthController < ApplicationController
-  skip_before_action :authenticate_request # this will be implemented later
+class AuthController < ActionController::Base
   def authenticate
     user = User.find_by_email(params[:email]) # you'll need to implement this
-    # binding.pry
     if user.try :authenticate, params[:password]
       render json: { auth_token: user.generate_auth_token }
     else

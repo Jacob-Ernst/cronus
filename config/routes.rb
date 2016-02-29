@@ -53,7 +53,10 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  post 'auth',       to: 'auth#authenticate', as: :auth
+  get  'needs_auth', to: 'home#needs_auth'
+  post 'users',      to: 'users#create'
+  put   'users',     to: 'users#update'
+  patch 'users',     to: 'users#update'
 
-  post 'auth' => 'auth#authenticate'
-  get 'needs_auth' => 'home#needs_auth'
 end

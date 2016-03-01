@@ -15,17 +15,13 @@ class UsersController < ApplicationController
 
   end
 
-  def update
-
-  end
-
   # PUT/PATCH /users
   def update
     @current_user.assign_attributes(user_params)
     if @current_user.save
       render json: { message: 'Succesfully updated user' }
     else
-      render json: { error: 'Invalid email or password' }, status: 422
+      render json: { error: 'Unable to update user' }, status: 422
     end
   end
 

@@ -7,8 +7,9 @@ class UsersController < ApplicationController
 
     user.password = params[:password]
 
+    # activerecord serializers
     if user.save
-      authenticate
+      render json: user, status: 201, serializer: CreatedUserSerializer
     else
       render json: { error: 'Could not create new resource' }, status: 409
     end

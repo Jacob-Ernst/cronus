@@ -71,12 +71,21 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'PUT update' do
-    # before { AuthController.any_instance.stub(:authenticate).and_return true }
+    before { allow_any_instance_of(UsersController).to receive(:authenticate_request).and_return(true) }
+
 
     context 'success' do
 
       it 'sends status 200' do
-        # put :update, {}
+        user = create(:user)
+
+        @current_user = user
+        binding.pry
+        allow_any_instance_of(UsersController).to receive(:set_current_user).and_return(true)
+
+        put :update, {}
+
+        expect(response.status).to eq(200)
       end
 
     end

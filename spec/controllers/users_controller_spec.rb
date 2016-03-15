@@ -80,7 +80,6 @@ RSpec.describe UsersController, type: :controller do
         user = create(:user)
 
         @current_user = user
-        binding.pry
         allow_any_instance_of(UsersController).to receive(:set_current_user).and_return(true)
 
         put :update, {}

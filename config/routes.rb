@@ -59,4 +59,6 @@ Rails.application.routes.draw do
   put   'users',     to: 'users#update'
   patch 'users',     to: 'users#update'
 
+  resources :goals
+
 end

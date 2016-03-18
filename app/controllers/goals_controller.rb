@@ -15,11 +15,9 @@ class GoalsController < ApplicationController
 
   # [PUT] /users/goals
   def update
-    goal = Goal.find goal_params[:id]
-
     goal.attributes = goal_params
 
-    if goal.save
+    if goal and goal.save
       render json: { message: 'Succesfully updated goal' }, status: 200
     else
       render json: { error: 'Unable to update goal' }, status: 422
@@ -28,10 +26,10 @@ class GoalsController < ApplicationController
 
   # DELETE /goals/:id
   def destroy
-    goal = Goal.find params[:id]
-
-    if goal.destroy
+    if goal and goal.destroy
       render json: { message: 'Goal successfully deleted' }, status: 200
+    elsif goal == nil
+      render json: { message: 'Goal not found' }, status: 404
     else
       render json: { message: 'Unable to delete goal' }, status: 422
     end
@@ -39,10 +37,10 @@ class GoalsController < ApplicationController
 
   # GET /goals/:id
   def show
-    goal = Goal.find params[:id]
-
-    if goal.user == @current_user
+    if goal and goal.user == @current_user
       render json: goal, status: 200
+    elsif goal == nil
+      render json: { message: 'Goal not found' }, status: 404
     else
       render json: { message: 'User unauthorized to view this goal' }, status: 403
     end
@@ -60,10 +58,19 @@ class GoalsController < ApplicationController
 
     goals = all_goals.offset(offset).limit(10)
 
-    render json: goals, status: 200
+    if !goals.empty?
+      render json: goals, status: 200
+    else
+      render json: { message: "You haven't made any goals yet" }, status: 200
+    end
+
   end
 
   private
+
+  def goal
+    @goal = Goal.exists?(params[:id]) ? Goal.find(params[:id]) : nil
+  end
 
   def goal_params
     params.require(:goal)

@@ -14,6 +14,10 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+gem 'active_model_serializers', '~> 0.9'
+
+gem 'faker', '~> 1.3', group: [:development, :test]
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -39,11 +43,12 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0'
+  gem 'factory_girl_rails', '~> 4.4'
+  gem 'binding_of_caller', '~> 0.7'
+  gem 'pry-rails', '~> 0.3'
 end
 
 group :development do
-  gem 'binding_of_caller', '~> 0.7'
-  gem 'pry-rails', '~> 0.3'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 

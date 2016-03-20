@@ -60,5 +60,6 @@ Rails.application.routes.draw do
   patch 'users',     to: 'users#update'
 
   resources :goals
+  resources :tags, only: [:index]
 
 end

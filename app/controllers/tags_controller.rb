@@ -1,5 +1,5 @@
 class TagsController < ApplicationController
-  # [GET] /goals
+  # [GET] /tags
   def index
     if !tags.empty?
       render json: tags, status: 200

@@ -28,4 +28,24 @@ class Goal < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :tags
 
+  accepts_nested_attributes_for :tags
+
+  def add_tags(tags)
+    tags.each do |tag|
+      tag_for_adding = Tag.where(name: tag).first_or_create do |t|
+        t.attributes = {name: tag} if t.name == nil
+      end
+
+      self.tags << tag_for_adding unless self.tags.include? tag_for_adding
+    end
+  end
+
+  def remove_tags(tags)
+    tags.each do |tag|
+      tag_for_removing = User.tags.where(name: tag)
+
+      self.tags.delete(tag_for_removing) << tag_for_removing unless tag_for_removing.empty?
+    end
+  end
+
 end

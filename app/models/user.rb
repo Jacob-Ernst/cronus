@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
 
   # Associations
-  has_many :goals
+  has_many :goals, dependent: :destroy
 
   def generate_auth_token
     payload = { user_id: self.id }

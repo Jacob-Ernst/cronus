@@ -80,7 +80,8 @@ class GoalsController < ApplicationController
             :frequency,
             :deadline,
             :category,
-            :target
+            :target,
+            tags: {}
           )
   end
 

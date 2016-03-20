@@ -7,8 +7,9 @@ class UsersController < ApplicationController
 
     user.password = params[:password]
 
+    # activerecord serializers
     if user.save
-      authenticate
+      render json: user, status: 201, serializer: CreatedUserSerializer
     else
       render json: { error: 'Could not create new resource' }, status: 409
     end
@@ -19,7 +20,7 @@ class UsersController < ApplicationController
   def update
     @current_user.assign_attributes(user_params)
     if @current_user.save
-      render json: { message: 'Succesfully updated user' }
+      render json: { message: 'Succesfully updated user' }, status: 200
     else
       render json: { error: 'Unable to update user' }, status: 422
     end
@@ -28,10 +29,11 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user)
+    params
     .permit(:first_name,
             :last_name,
-            :email
+            :email,
+            :password
           )
   end
 

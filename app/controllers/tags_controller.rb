@@ -2,7 +2,7 @@ class TagsController < ApplicationController
   # [GET] /tags
   def index
     if !tags.empty?
-      render json: tags, status: 200
+      render json: ActiveModel::ArraySerializer.new(tags, each_serializer: TagSerializer), status: 200
     else
       render json: { message: "You haven't added any tags yet" }, status: 200
     end

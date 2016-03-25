@@ -42,7 +42,7 @@ class Goal < ActiveRecord::Base
 
   def remove_tags(tags)
     tags.each do |tag|
-      tag_for_removing = User.tags.where(name: tag)
+      tag_for_removing = self.tags.where(name: tag)
 
       self.tags.delete(tag_for_removing) << tag_for_removing unless tag_for_removing.empty?
     end

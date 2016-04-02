@@ -80,7 +80,7 @@ class GoalsController < ApplicationController
 
   # DELETE /goals/:id
   def remove_tags_from_goal
-    if goal and remove_tags.add_tags(params[:tags])
+    if goal and goal.remove_tags(params[:tags])
       render json: { message: 'Succesfully removed tags from goal' }, status: 200
     elsif goal == nil
       render json: { message: 'Goal not found' }, status: 404

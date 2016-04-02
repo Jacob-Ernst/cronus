@@ -7,13 +7,14 @@ class GoalsController < ApplicationController
     goal = Goal.new params_for_save
 
     if goal.save
+      goal.add_tags params[:tags]
       render json: goal.reload, status: 201
     else
       render json: { error: 'Could not create new goal' }, status: 409
     end
   end
 
-  # [PUT] /users/goals
+  # [PUT] /goals/:id
   def update
     goal.attributes = goal_params
 
@@ -51,7 +52,7 @@ class GoalsController < ApplicationController
     all_goals = Goal.where(user: @current_user)
 
     if params[:page]
-      offset = (params[] - 1) * 10
+      offset = (params[:page] - 1) * 10
     else
       offset = 0
     end
@@ -66,6 +67,28 @@ class GoalsController < ApplicationController
 
   end
 
+  # [PUT] goals/:id/tags
+  def add_tags_to_goal
+    if goal and goal.add_tags(params[:tags])
+      render json: { message: 'Succesfully added tags to goal' }, status: 200
+    elsif goal == nil
+      render json: { message: 'Goal not found' }, status: 404
+    else
+      render json: { error: 'Unable to add tags to goal' }, status: 422
+    end
+  end
+
+  # DELETE /goals/:id
+  def remove_tags_from_goal
+    if goal and goal.remove_tags(params[:tags])
+      render json: { message: 'Succesfully removed tags from goal' }, status: 200
+    elsif goal == nil
+      render json: { message: 'Goal not found' }, status: 404
+    else
+      render json: { message: 'Unable to remove tags from goal' }, status: 422
+    end
+  end
+
   private
 
   def goal
@@ -74,8 +97,7 @@ class GoalsController < ApplicationController
 
   def goal_params
     params.require(:goal)
-    .permit(:id,
-            :title,
+    .permit(:title,
             :description,
             :frequency,
             :deadline,

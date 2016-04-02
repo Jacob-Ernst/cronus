@@ -55,10 +55,15 @@ Rails.application.routes.draw do
   #   end
   post 'auth',       to: 'auth#authenticate', as: :auth
   get  'needs_auth', to: 'home#needs_auth'
-  post 'users',      to: 'users#create'
-  put   'users',     to: 'users#update'
-  patch 'users',     to: 'users#update'
+
+  resources 'users', only: [:create, :update]
+
+  resources 'tags', only: [:index]
+
+  post   'goals/:id/tags', to: 'goals#add_tags_to_goal'
+  delete 'goals/:id/tags', to: 'goals#remove_tags_from_goal'
 
   resources :goals
+
 
 end
